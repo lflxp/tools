@@ -2,6 +2,7 @@ package clientgo
 
 import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/client-go/discovery"
 	"k8s.io/client-go/dynamic"
 
 	"flag"
@@ -17,11 +18,69 @@ import (
 )
 
 var (
-	once      sync.Once
-	twice     sync.Once
-	clients   dynamic.Interface
-	clientset *kubernetes.Clientset
+	once            sync.Once
+	twice           sync.Once
+	three           sync.Once
+	clients         dynamic.Interface
+	clientset       *kubernetes.Clientset
+	discoveryclient *discovery.DiscoveryClient
 )
+
+func InitClientDiscovery() *discovery.DiscoveryClient {
+	var err error
+	// 实现同时集群内外的支持
+	// 便于本地调试
+	three.Do(func() {
+		log.Info("start doInitDiscovery()")
+		discoveryclient, err = doInitDiscovery()
+		if err != nil {
+			log.Debugf("init out of cluster error: %v", err)
+			discoveryclient, err = doInitDiscoveryInner()
+			if err != nil {
+				// log.Fatal(err)
+				panic(err)
+			}
+		}
+	})
+	return discoveryclient
+}
+
+func doInitDiscovery() (*discovery.DiscoveryClient, error) {
+	var kubeconfig *string
+	if home := homedir.HomeDir(); home != "" {
+		kubeconfig = flag.String("kubeconfig", filepath.Join(home, ".kube", "config"), "(optional) absolute path to the kubeconfig file")
+	} else {
+		kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
+	}
+	flag.Parse()
+
+	// use the current context in kubeconfig
+	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
+	if err != nil {
+		return nil, err
+	}
+
+	// create the clientset
+	discoveryclient, err := discovery.NewDiscoveryClientForConfig(config)
+	if err != nil {
+		return nil, err
+	}
+	return discoveryclient, nil
+}
+
+func doInitDiscoveryInner() (*discovery.DiscoveryClient, error) {
+	config, err := rest.InClusterConfig()
+	if err != nil {
+		return nil, err
+	}
+
+	clientset, err := discovery.NewDiscoveryClientForConfig(config)
+	if err != nil {
+		return nil, err
+	}
+
+	return clientset, nil
+}
 
 func InitClient() *kubernetes.Clientset {
 	var err error
