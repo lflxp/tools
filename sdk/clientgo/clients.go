@@ -48,9 +48,9 @@ func InitClientDiscovery() *discovery.DiscoveryClient {
 func doInitDiscovery() (*discovery.DiscoveryClient, error) {
 	var kubeconfig *string
 	if home := homedir.HomeDir(); home != "" {
-		kubeconfig = flag.String("kubeconfig", filepath.Join(home, ".kube", "config"), "(optional) absolute path to the kubeconfig file")
+		kubeconfig = flag.String("kubeconfigdiscovery", filepath.Join(home, ".kube", "config"), "(optional) absolute path to the kubeconfig file")
 	} else {
-		kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
+		kubeconfig = flag.String("kubeconfigdiscovery", "", "absolute path to the kubeconfig file")
 	}
 	flag.Parse()
 
@@ -174,9 +174,9 @@ func doInit() (*kubernetes.Clientset, error) {
 func DoInitDynamic() (dynamic.Interface, error) {
 	var kubeconfig *string
 	if home := homedir.HomeDir(); home != "" {
-		kubeconfig = flag.String("kubeconfig2", filepath.Join(home, ".kube", "config"), "(optional) absolute path to the kubeconfig file")
+		kubeconfig = flag.String("kubeconfigdynamic", filepath.Join(home, ".kube", "config"), "(optional) absolute path to the kubeconfig file")
 	} else {
-		kubeconfig = flag.String("kubeconfig2", "", "absolute path to the kubeconfig file")
+		kubeconfig = flag.String("kubeconfigdynamic", "", "absolute path to the kubeconfig file")
 	}
 	flag.Parse()
 
