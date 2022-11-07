@@ -224,6 +224,9 @@ func InitRestClient() (*rest.Config, error, *corev1client.CoreV1Client) {
 }
 
 func RestConfig() *rest.Config {
+	if restConfig == nil {
+		InitClientDynamic()
+	}
 	return restConfig
 }
 
