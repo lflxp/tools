@@ -24,7 +24,7 @@ func NewOrm() *xorm.Engine {
 	ormOnce.Do(func() {
 		home := homedir.HomeDir()
 		var err error
-		orm, err = xorm.NewEngine("sqlite3", filepath.Join(home, dbname))
+		orm, err = xorm.NewEngine("sqlite", filepath.Join(home, dbname))
 		if err != nil {
 			panic(err)
 		}
