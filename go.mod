@@ -115,3 +115,5 @@ require (
 	sigs.k8s.io/yaml v1.3.0 // indirect
 	xorm.io/builder v0.3.11-0.20220531020008-1bd24a7dc978 // indirect
 )
+
+replace github.com/go-eden/routine => github.com/go-eden/routine v0.0.3
