@@ -15,6 +15,7 @@ require (
 	k8s.io/apimachinery v0.25.3
 	k8s.io/client-go v0.25.3
 	k8s.io/kubectl v0.25.3
+	k8s.io/metrics v0.25.3
 	modernc.org/sqlite v1.20.1
 	sigs.k8s.io/controller-runtime v0.13.0
 	xorm.io/core v0.7.3
