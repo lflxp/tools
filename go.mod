@@ -1,11 +1,10 @@
 module github.com/lflxp/tools
 
-go 1.19
+go 1.21.6
 
 require (
 	github.com/deckarep/golang-set v1.8.0
 	github.com/gin-gonic/gin v1.8.1
-	github.com/go-eden/slf4go v1.1.2
 	github.com/guonaihong/gout v0.3.1
 	github.com/kubernetes-csi/external-snapshotter/client/v4 v4.2.0
 	github.com/meilisearch/meilisearch-go v0.21.0
@@ -35,8 +34,6 @@ require (
 	github.com/evanphx/json-patch/v5 v5.6.0 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
-	github.com/go-eden/common v0.1.14 // indirect
-	github.com/go-eden/routine v1.0.2 // indirect
 	github.com/go-logr/logr v1.2.3 // indirect
 	github.com/go-openapi/jsonpointer v0.19.5 // indirect
 	github.com/go-openapi/jsonreference v0.19.6 // indirect

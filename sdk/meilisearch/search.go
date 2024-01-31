@@ -1,7 +1,8 @@
 package meilisearch
 
 import (
-	log "github.com/go-eden/slf4go"
+	"log/slog"
+
 	"github.com/meilisearch/meilisearch-go"
 )
 
@@ -11,7 +12,7 @@ var (
 )
 
 func InitMeili() {
-	log.Debugf("Meilisearch host %s apikey %s", Host, Apikey)
+	slog.Debug("Meilisearch", "host", Host, "apikey", Apikey)
 	SearchCli = meilisearch.NewClient(meilisearch.ClientConfig{
 		Host:   Host,
 		APIKey: Apikey,

@@ -3,10 +3,10 @@ package model
 import (
 	"context"
 	"errors"
+	"log/slog"
 
 	"github.com/lflxp/tools/sdk/clientgo"
 
-	log "github.com/go-eden/slf4go"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -111,7 +111,7 @@ func (g *GetGVR) Post() (*unstructured.Unstructured, error) {
 
 func (g *GetGVR) Patch() (*unstructured.Unstructured, error) {
 	if g.PatchData == "" {
-		log.Error("PatchData is empty")
+		slog.Error("PatchData is empty")
 		return nil, errors.New("PatchData is empty")
 	}
 
